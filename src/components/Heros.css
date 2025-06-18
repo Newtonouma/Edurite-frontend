@@ -121,6 +121,7 @@ body, html {
 
 @media (max-width: 600px) {
   .heros-container {
+    margin-top: 0rem;
   width: 100vw;
   max-width: 100vw;
   overflow: hidden;
