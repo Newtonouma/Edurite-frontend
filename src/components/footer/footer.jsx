@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Footer.css';
+import './footer.css';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
