@@ -2,6 +2,7 @@ import Heros from './components/Heros';
 import PosShowcase from './components/PosShowcase';
 import FeatureSection from './components/FeatureSection';
 import AudienceSection from './components/AudienceSection';
+import PricingSection from './components/PricingSection';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <PosShowcase />
       <FeatureSection />
       <AudienceSection />
+      <PricingSection />
       {/* ...other homepage content... */}
     </>
   );
