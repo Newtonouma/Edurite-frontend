@@ -202,9 +202,6 @@
 }
 
 @media (max-width: 480px) {
-  .pricing-section {
-    padding: 2rem;
-  }
   .pricing-cards-container {
     flex-direction: column;
     align-items: center;
@@ -212,7 +209,7 @@
   }
   .pricing-card {
     min-width: 0;
-    width: 98vw;
+    width: 80vw;
     padding: 1.1rem 0.5rem 0.8rem 0.5rem;
     box-sizing: border-box;
   }
