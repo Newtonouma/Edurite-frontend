@@ -1,0 +1,123 @@
+.audience-section {
+  width: 100vw;
+  max-width: 100vw;
+  background: #f7faf9;
+  padding: clamp(2rem, 6vw, 5rem) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.audience-content-wrapper {
+  display: flex;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1200px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.audience-info-col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.audience-title {
+  color: #01574C;
+  font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.audience-desc {
+  color: #01574C;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  margin-top: 0;
+}
+
+.audience-list-row {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.audience-list-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  flex: 1 1 0;
+}
+
+.audience-list-item {
+  display: flex;
+  align-items: center;
+  font-size: 1.08rem;
+  color: #01574C;
+  font-weight: 600;
+  gap: 0.7rem;
+}
+
+.audience-arrow {
+  color: #01bfa5;
+  font-size: 1.1em;
+}
+
+.audience-image-col {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.audience-image {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(1, 87, 76, 0.10);
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .audience-content-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  .audience-image-col, .audience-info-col {
+    width: 100%;
+    max-width: 600px;
+  }
+  .audience-image {
+    max-width: 100%;
+  }
+  .audience-list-row {
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .audience-section {
+    padding: 1.2rem 0;
+  }
+  .audience-content-wrapper {
+    gap: 1.2rem;
+  }
+  .audience-title {
+    font-size: 1rem;
+  }
+  .audience-desc {
+    font-size: 1.1rem;
+  }
+  .audience-list-row {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .audience-list-col {
+    gap: 0.7rem;
+  }
+}
