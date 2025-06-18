@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes, FaShoppingCart, FaUser } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
+import './navbar.css';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
