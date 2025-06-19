@@ -43,7 +43,7 @@ const Footer = () => {
         {/* Footer Links */}
         <div className="footer-links">
           <div className="footer-column">
-            <h4>Edurite Systems Solution</h4>
+            <h4>Erudite Systems Solution</h4>
             <p>Our advanced POS systems empower your business with seamless transactions, real-time analytics.</p>
             <div className="social-links">
             <a href="https://facebook.com" aria-label="Facebook">
