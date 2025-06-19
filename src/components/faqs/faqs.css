@@ -1,7 +1,6 @@
 .faqs-section {
   background: #f8fcfb;
   padding: 5rem 2rem;
-  margin-bottom: 70vh;
 }
 
 .container {
@@ -83,7 +82,6 @@
 @media (max-width: 768px) {
   .faqs-section {
     padding: 3rem 1.5rem;
-    margin-bottom: 100vh;
   }
   
   .section-title {

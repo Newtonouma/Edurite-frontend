@@ -5,8 +5,10 @@ import { FaShoppingCart, FaCalendarAlt } from 'react-icons/fa';
 const CTASection = () => {
   return (
     <section className="cta-section">
-      {/* Background overlay */}
-      <div className="cta-overlay"></div>
+      {/* Background elements */}
+      <div className="cta-background">
+        <div className="cta-overlay"></div>
+      </div>
       
       {/* Content container */}
       <div className="cta-content">
@@ -17,10 +19,10 @@ const CTASection = () => {
         </p>
         <div className="cta-buttons">
           <a href="/order" className="cta-btn primary">
-            <FaShoppingCart /> Order Now
+            <FaShoppingCart className="cta-icon" /> Order Now
           </a>
           <a href="/demo" className="cta-btn secondary">
-            <FaCalendarAlt /> Book Demo
+            <FaCalendarAlt className="cta-icon" /> Book Demo
           </a>
         </div>
       </div>

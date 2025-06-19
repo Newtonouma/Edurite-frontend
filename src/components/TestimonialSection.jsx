@@ -39,7 +39,6 @@ const testimonials = [
 ];
 
 const sliderSettings = {
-	dots: true,
 	arrows: true,
 	infinite: true,
 	speed: 500,

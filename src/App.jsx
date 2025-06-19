@@ -7,6 +7,7 @@ import PricingSection from './components/PricingSection';
 import CTASection from './components/cta/cta';
 import TestimonialSection from './components/TestimonialSection';
 import FAQsSection from './components/faqs/faqs';
+import CtaMessageSection from './components/cta/CtaMessageSection';
 import Footer from './components/footer/footer';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <CTASection />
       <TestimonialSection />
       <FAQsSection />
-      <Footer />
+      <CtaMessageSection />
     </>
   );
 }
