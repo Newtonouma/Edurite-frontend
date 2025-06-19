@@ -1,29 +1,22 @@
-import Navbar from './components/Navbar/navbar';
-import Heros from './components/Heros';
-import PosShowcase from './components/PosShowcase';
-import FeatureSection from './components/FeatureSection';
-import AudienceSection from './components/AudienceSection';
-import PricingSection from './components/PricingSection';
-import CTASection from './components/cta/cta';
-import TestimonialSection from './components/TestimonialSection';
-import FAQsSection from './components/faqs/faqs';
-import CtaMessageSection from './components/cta/CtaMessageSection';
-import Footer from './components/footer/footer';
+import React from "react";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/navbar";
+import Footer from "./components/footer/footer";
+import Home from "./pages/Home";
+import Login from "./pages/aurth/login"
+import Signup from "./pages/aurth/signup";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Navbar />
-      <Heros />
-      <PosShowcase />
-      <FeatureSection />
-      <AudienceSection />
-      <PricingSection />
-      <CTASection />
-      <TestimonialSection />
-      <FAQsSection />
-      <CtaMessageSection />
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
+      </Routes>
+    </div>
   );
 }
 

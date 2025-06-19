@@ -1,134 +1,350 @@
-import React, { useState, useEffect } from 'react';
-import { FaBars, FaTimes, FaShoppingCart, FaUser } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
 import './navbar.css';
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+// Lucide React icons (you can replace these with your preferred icons)
+const LayoutDashboardIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="3" y="3" width="7" height="9"/>
+    <rect x="14" y="3" width="7" height="5"/>
+    <rect x="14" y="12" width="7" height="9"/>
+    <rect x="3" y="16" width="7" height="5"/>
+  </svg>
+);
+
+const CreditCardIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+    <line x1="1" y1="10" x2="23" y2="10"/>
+  </svg>
+);
+
+const PackageIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+    <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+    <line x1="12" y1="22.08" x2="12" y2="12"/>
+  </svg>
+);
+
+const UsersIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
+);
+
+const BarChartIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <line x1="12" y1="20" x2="12" y2="10"/>
+    <line x1="18" y1="20" x2="18" y2="4"/>
+    <line x1="6" y1="20" x2="6" y2="16"/>
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </svg>
+);
+
+const HelpCircleIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+    <point x="12" y="17"/>
+  </svg>
+);
+
+const ChevronDownIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="6,9 12,15 18,9"/>
+  </svg>
+);
+
+const features = [
+  {
+    title: "Point of Sale",
+    href: "/features/pos",
+    description: "Fast, intuitive checkout system with multiple payment options",
+  },
+  {
+    title: "Inventory Management",
+    href: "/features/inventory",
+    description: "Real-time tracking and automated stock alerts",
+  },
+  {
+    title: "Customer Management",
+    href: "/features/customers",
+    description: "Build customer profiles and loyalty programs",
+  },
+  {
+    title: "Reporting & Analytics",
+    href: "/features/analytics",
+    description: "Powerful insights to grow your business",
+  },
+  {
+    title: "Employee Management",
+    href: "/features/employees",
+    description: "Track shifts, permissions, and performance",
+  },
+  {
+    title: "Multi-Location",
+    href: "/features/multi-location",
+    description: "Manage multiple stores from one dashboard",
+  },
+];
+
+
+
+
+const NavigationDropdown = ({ trigger, children, isOpen, onToggle }) => {
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        onToggle(false);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    // Prevent background scroll when mobile menu is open
-    if (isMobileMenuOpen) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
     }
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.body.classList.remove('menu-open');
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isMobileMenuOpen]);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const Backdrop = () => (
-    <div
-      className={`navbar-backdrop${isMobileMenuOpen ? ' active' : ''}`}
-      onClick={closeMobileMenu}
-      aria-hidden="true"
-    />
-  );
-
-  const navLinks = [
-    { to: '/features', label: 'Features' },
-    { to: '/solutions', label: 'Solutions' },
-    { to: '/pricing', label: 'Pricing' },
-    { to: '/testimonials', label: 'Testimonials' },
-    { to: '/resources', label: 'Resources' },
-  ];
+  }, [isOpen, onToggle]);
 
   return (
-    <nav className={`navbar${scrolled ? ' navbar-scrolled' : ''}`}>
-      <div className="navbar-container">
+    <div className="nav-dropdown" ref={dropdownRef}>
+      <button 
+        className={`nav-trigger ${isOpen ? 'active' : ''}`}
+        onClick={() => onToggle(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        {trigger}
+        <ChevronDownIcon />
+      </button>
+      {isOpen && (
+        <div className="nav-dropdown-content">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ListItem = ({ title, children, href }) => {
+  return (
+    <li className="list-item">
+      <a href={href} className="list-item-link">
+        <div className="list-item-title">{title}</div>
+        <p className="list-item-description">{children}</p>
+      </a>
+    </li>
+  );
+};
+
+function MainNavigation() {
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleDropdownToggle = (dropdownName, isOpen) => {
+    setOpenDropdown(isOpen ? dropdownName : null);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  return (
+    <nav className="main-navigation">
+      <div className="nav-container">
         {/* Logo */}
-        <Link to="/" className="navbar-logo">
-          <span className="logo-text">Erudite</span>
-          <span className="logo-highlight">POS</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <ul className="navbar-links">
-          {navLinks.map((link) => (
-            <li key={link.to}>
-              <Link
-                to={link.to}
-                className={location.pathname === link.to ? 'active' : ''}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Desktop CTA Buttons */}
-        <div className="navbar-cta">
-          <Link to="/demo" className="cta-secondary">
-            <FaUser className="icon-sm" /> Demo
-          </Link>
-          <Link to="/order" className="cta-primary">
-            <FaShoppingCart className="icon-sm" /> Order Now
-          </Link>
+        <div className="nav-logo">
+          <a href="/">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 0C7.163 0 0 7.163 0 16C0 24.837 7.163 32 16 32C24.837 32 32 24.837 32 16C32 7.163 24.837 0 16 0ZM16 28C9.373 28 4 22.627 4 16C4 9.373 9.373 4 16 4C22.627 4 28 9.373 28 16C28 22.627 22.627 28 16 28Z" fill="#4F46E5"/>
+              <path d="M16 8C11.582 8 8 11.582 8 16C8 20.418 11.582 24 16 24C20.418 24 24 20.418 24 16C24 11.582 20.418 8 16 8ZM16 20C13.791 20 12 18.209 12 16C12 13.791 13.791 12 16 12C18.209 12 20 13.791 20 16C20 18.209 18.209 20 16 20Z" fill="#4F46E5"/>
+            </svg>
+            <span>YourBrand</span>
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="mobile-menu-button"
-          onClick={toggleMobileMenu}
-          aria-label={isMobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          <span className={`menu-icon${isMobileMenuOpen ? ' hidden' : ''}`}><FaBars /></span>
-          <span className={`close-icon${isMobileMenuOpen ? '' : ' hidden'}`}><FaTimes /></span>
+        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {mobileMenuOpen ? (
+              <path d="M18 6L6 18M6 6l12 12" />
+            ) : (
+              <path d="M3 12h18M3 6h18M3 18h18" />
+            )}
+          </svg>
         </button>
-      </div>
 
-      {/* Mobile Menu Backdrop */}
-      {isMobileMenuOpen && <Backdrop />}
-
-      {/* Mobile Menu */}
-      <div
-        className={`mobile-menu${isMobileMenuOpen ? ' active' : ''}`}
-        id="mobile-menu"
-        role="menu"
-        aria-hidden={!isMobileMenuOpen}
-      >
-        <ul className="mobile-links">
-          {navLinks.map((link) => (
-            <li key={link.to}>
-              <Link
-                to={link.to}
-                onClick={closeMobileMenu}
-                className={location.pathname === link.to ? 'active' : ''}
-              >
-                {link.label}
-              </Link>
+        {/* Navigation Links - Middle */}
+        <div className={`nav-links-container ${mobileMenuOpen ? 'open' : ''}`}>
+          <ul className="nav-list">
+            <li className="nav-item">
+              <a href="/" className="nav-link">
+                <span className="nav-link-text">Home</span>
+                <span className="nav-link-highlight"></span>
+              </a>
             </li>
-          ))}
-        </ul>
-        <div className="mobile-cta">
-          <Link to="/demo" className="cta-secondary" onClick={closeMobileMenu}>
-            <FaUser className="icon-sm" /> Request Demo
-          </Link>
-          <Link to="/order" className="cta-primary" onClick={closeMobileMenu}>
-            <FaShoppingCart className="icon-sm" /> Order Now
-          </Link>
+
+            <li className="nav-item">
+              <NavigationDropdown
+                trigger="Features"
+                isOpen={openDropdown === 'features'}
+                onToggle={(isOpen) => handleDropdownToggle('features', isOpen)}
+              >
+                <div className="dropdown-header">
+                  <h3 className="dropdown-title">Features</h3>
+                  <p className="dropdown-subtitle">Everything you need to run your business</p>
+                </div>
+                <ul className="features-grid">
+                  {features.map((feature) => (
+                    <ListItem
+                      key={feature.title}
+                      title={feature.title}
+                      href={feature.href}
+                    >
+                      {feature.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationDropdown>
+            </li>
+
+            <li className="nav-item">
+              <NavigationDropdown
+                trigger="Solutions"
+                isOpen={openDropdown === 'solutions'}
+                onToggle={(isOpen) => handleDropdownToggle('solutions', isOpen)}
+              >
+                <div className="dropdown-header">
+                  <h3 className="dropdown-title">Solutions</h3>
+                  <p className="dropdown-subtitle">Tailored for your business type</p>
+                </div>
+                <ul className="solutions-list">
+                  <li className="solution-item">
+                    <a href="/solutions/retail" className="solution-link">
+                      <div className="solution-icon">
+                        <PackageIcon />
+                      </div>
+                      <div className="solution-content">
+                        <div className="solution-title">Retail Stores</div>
+                        <p className="solution-description">Complete POS for retail businesses</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="solution-item">
+                    <a href="/solutions/restaurants" className="solution-link">
+                      <div className="solution-icon">
+                        <CreditCardIcon />
+                      </div>
+                      <div className="solution-content">
+                        <div className="solution-title">Restaurants</div>
+                        <p className="solution-description">Specialized for food service</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="solution-item">
+                    <a href="/solutions/services" className="solution-link">
+                      <div className="solution-icon">
+                        <UsersIcon />
+                      </div>
+                      <div className="solution-content">
+                        <div className="solution-title">Service Businesses</div>
+                        <p className="solution-description">Perfect for salons, spas, and more</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </NavigationDropdown>
+            </li>
+
+            <li className="nav-item">
+              <a href="/pricing" className="nav-link">
+                <span className="nav-link-text">Pricing</span>
+                <span className="nav-link-highlight"></span>
+              </a>
+            </li>
+
+            <li className="nav-item">
+              <NavigationDropdown
+                trigger="Resources"
+                isOpen={openDropdown === 'resources'}
+                onToggle={(isOpen) => handleDropdownToggle('resources', isOpen)}
+              >
+                <div className="dropdown-header">
+                  <h3 className="dropdown-title">Resources</h3>
+                  <p className="dropdown-subtitle">Learn and get support</p>
+                </div>
+                <ul className="resources-list">
+                  <li className="resource-item">
+                    <a href="/resources/docs" className="resource-link">
+                      <div className="resource-icon">
+                        <HelpCircleIcon />
+                      </div>
+                      <div className="resource-content">
+                        <div className="resource-title">Documentation</div>
+                        <p className="resource-description">Setup guides and tutorials</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="resource-item">
+                    <a href="/resources/blog" className="resource-link">
+                      <div className="resource-icon">
+                        <BarChartIcon />
+                      </div>
+                      <div className="resource-content">
+                        <div className="resource-title">Blog</div>
+                        <p className="resource-description">Tips for growing your business</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="resource-item">
+                    <a href="/resources/support" className="resource-link">
+                      <div className="resource-icon">
+                        <SettingsIcon />
+                      </div>
+                      <div className="resource-content">
+                        <div className="resource-title">Support</div>
+                        <p className="resource-description">Get help when you need it</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </NavigationDropdown>
+            </li>
+
+            <li className="nav-item">
+              <a href="/contact" className="nav-link">
+                <span className="nav-link-text">Contact</span>
+                <span className="nav-link-highlight"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Login Button - Right */}
+        <div className="nav-auth">
+          <a href="/login" className="login-button">
+            Login
+          </a>
+          <a href="/signup" className="signup-button">
+            Sign Up
+          </a>
         </div>
       </div>
     </nav>
   );
-};
+}
 
-export default Navbar;
+export default MainNavigation;
