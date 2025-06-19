@@ -169,7 +169,6 @@ function MainNavigation() {
         <div className="nav-logo">
           <a href="/">
             <img className='logo-image' src="/logo.jpg" alt="Erudite-logo" />
-            <span>Erudite</span>
           </a>
         </div>
 
