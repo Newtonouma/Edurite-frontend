@@ -9,12 +9,12 @@ const Heros = () => {
   useEffect(() => {
     const mount = mountRef.current;
     const canvas = canvasRef.current;
-    const width = mount.offsetWidth; // use offsetWidth for accuracy
+    const width = mount.offsetWidth; 
     const height = mount.offsetHeight;
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#01574C'); // theme color
+    scene.background = new THREE.Color('#01574C'); 
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
@@ -24,8 +24,8 @@ const Heros = () => {
 
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setClearColor(0x01574C, 0); // transparent background
-    renderer.setSize(width, height, false); // do not set style width/height
+    renderer.setClearColor(0x01574C, 0); 
+    renderer.setSize(width, height, false); 
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     renderer.domElement.style.display = 'block';
@@ -44,7 +44,7 @@ const Heros = () => {
     const stars = [];
     const starGeometry = new THREE.SphereGeometry(0.08, 8, 8);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xB2FFF7, transparent: true, opacity: 0.85 }); // light teal accent
-    const maxRadius = 10; // covers even the corners of a wide viewport
+    const maxRadius = 10; 
     for (let i = 0; i < starCount; i++) {
       const star = new THREE.Mesh(starGeometry, starMaterial.clone());
       // Distribute stars in a wide tube along z axis, covering the whole screen
@@ -52,15 +52,15 @@ const Heros = () => {
       const radius = Math.random() * maxRadius;
       star.position.x = Math.cos(angle) * radius;
       star.position.y = Math.sin(angle) * radius;
-      star.position.z = -40 + Math.random() * 35; // z from -40 to -5
-      star.userData.speed = 0.002; // slowed down
+      star.position.z = -40 + Math.random() * 35; 
+      star.userData.speed = 0.002; 
       // Color tint (theme compatible)
       if (Math.random() < 0.7) {
-        star.material.color.set('#B2FFF7'); // light teal
+        star.material.color.set('#B2FFF7'); 
       } else if (Math.random() < 0.85) {
-        star.material.color.set('#E0F7FA'); // soft light blue
+        star.material.color.set('#E0F7FA');
       } else {
-        star.material.color.set('#FFFFFF'); // white
+        star.material.color.set('#FFFFFF'); 
       }
       scene.add(star);
       stars.push(star);

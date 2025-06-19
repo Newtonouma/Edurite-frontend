@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './navbar.css';
 
-// Lucide React icons (you can replace these with your preferred icons)
 const LayoutDashboardIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <rect x="3" y="3" width="7" height="9"/>
