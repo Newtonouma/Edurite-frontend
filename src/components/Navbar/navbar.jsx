@@ -163,7 +163,12 @@ function MainNavigation() {
 
             <li className="nav-item nav-item-softwares">
               <div className="nav-link-softwares-wrapper">
-                <Link to="/softwares" className="nav-link nav-link-softwares">
+                <Link to="/softwares" className="nav-link nav-link-softwares"
+                  onClick={() => {
+                    setOpenDropdown(null); // Close dropdown
+                    setMobileMenuOpen(false); // Close mobile menu
+                  }}
+                >
                   <span className="nav-link-text">Softwares</span>
                   <span className="nav-link-highlight"></span>
                 </Link>
