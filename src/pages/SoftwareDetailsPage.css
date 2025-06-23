@@ -1,3 +1,8 @@
+/* GLOBAL BOX-SIZING FIX */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 .software-details-section {
   margin: 0 auto;
   background: #fff;
@@ -490,7 +495,7 @@
 /* RESPONSIVE */
 @media (max-width: 1100px) {
   .software-details-main-content {
-    max-width: 100vw;
+    max-width: 100%;
     padding: 0 0.5rem;
   }
   .software-details-main-left, .software-details-main-right {
@@ -501,11 +506,11 @@
   .software-details-main-content {
     flex-direction: column;
     gap: 1.2rem;
-    max-width: 100vw;
+    max-width: 100%;
     padding: 0 0.2rem;
   }
   .software-details-main-right {
-    max-width: 100vw;
+    max-width: 100%;
     width: 100%;
     margin-top: 1.2rem;
     padding: 1.2rem 0.7rem 1.2rem 0.7rem;
@@ -519,7 +524,7 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 0 0.1rem;
-    max-width: 100vw;
+    max-width: 100%;
   }
   .software-details-main-left, .software-details-main-right {
     padding: 0.3rem 0.1rem 0.3rem 0.1rem;
@@ -681,22 +686,21 @@
 @media (max-width: 480px) {
   .software-details-section {
     margin: 0;
-    width: 100vw;
+    width: 100%;
     background: #fff;
   }
   .software-details-main-content {
     flex-direction: column;
     padding: 0;
     gap: 1rem;
-    max-width: 100vw;
-    width: 100vw;
+    max-width: 100%;
+    width: 100%;
     margin: 0;
-  padding: 2rem;
   }
   .software-details-main-left,
   .software-details-main-right {
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 100%;
     padding: 0;
     margin: 0 0 1rem 0;
     border-radius: 0;
@@ -707,16 +711,16 @@
     border-radius: 0;
     margin-bottom: 1rem;
     box-shadow: none;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 100%;
   }
   .software-details-tabs {
     overflow-x: auto;
     padding: 0.5rem 0.2rem 0.5rem 0.2rem;
     margin-bottom: 1rem;
     gap: 0.5rem;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 100%;
   }
   .software-details-tab {
     padding: 0.6rem 1rem;
@@ -726,23 +730,18 @@
   .software-details-screenshots-scroll {
     gap: 0.8rem;
     padding-bottom: 0.8rem;
-    width: 100vw;
-    max-width: 100vw;
-  }
-  .software-details-screenshot {
-    width: 180px;
-    height: 100px;
-    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
   }
   .software-details-other-list {
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 100%;
     gap: 1rem;
     padding: 0.5rem;
   }
   .software-details-other-card {
-    width: 96vw;
-    max-width: 96vw;
+    width: 96%;
+    max-width: 96%;
     min-width: 0;
     padding: 0.4rem 0.5rem;
     gap: 0.1rem;
