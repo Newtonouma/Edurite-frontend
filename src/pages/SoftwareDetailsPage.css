@@ -2,7 +2,6 @@
   margin: 0 auto;
   background: #fff;
   margin-bottom: 2.5rem;
-  padding-right: 2rem;
 }
 
 /* HERO/BANNER */
@@ -122,13 +121,13 @@
 .software-details-main-content {
   margin: 0 auto;
   width: 100%;
-  padding: 0 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   background: none;
   gap: 2.2rem;
-    max-width: 1600px;
+  max-width: 1600px;
 }
 .software-details-main-left {
   flex: 2 1 0;
@@ -679,7 +678,6 @@
 }
 @media (max-width: 480px) {
   .software-details-section {
-    padding: 0;
     margin: 0;
     width: 100vw;
     background: #fff;
@@ -691,6 +689,7 @@
     max-width: 100vw;
     width: 100vw;
     margin: 0;
+  padding: 2rem;
   }
   .software-details-main-left,
   .software-details-main-right {
