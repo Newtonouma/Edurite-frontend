@@ -676,3 +676,260 @@
     font-size: 0.93em;
   }
 }
+@media (max-width: 480px) {
+  .software-details-section {
+    padding: 0;
+  }
+
+  .software-details-hero {
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .software-details-hero-video-bg,
+  .software-details-hero-info {
+    position: relative;
+    width: 100%;
+  }
+
+  .software-details-hero-info {
+    padding: 0;
+  }
+
+  .software-details-back {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .software-details-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .software-details-tagline {
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .software-details-ratingsbar {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .software-details-platforms {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .software-details-platform {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .software-details-featurechips {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .software-details-chip {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  .software-details-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .software-details-demo {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .software-details-main-content {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .software-details-main-left,
+  .software-details-main-right {
+    width: 100%;
+    padding: 0;
+  }
+
+  .software-details-tabs {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+
+  .software-details-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .software-details-screenshots-scroll {
+    gap: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .software-details-screenshot {
+    width: 180px;
+    height: 100px;
+    border-radius: 0.5rem;
+  }
+
+  .software-details-section-block {
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    border-radius: 0.8rem;
+  }
+
+  .software-details-about-title,
+  .software-details-section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .software-details-overview {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .software-details-readmore {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .software-details-features {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .software-details-pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .software-details-pricing-card {
+    padding: 1.2rem;
+  }
+
+  .software-details-pricing-plan {
+    font-size: 1rem;
+  }
+
+  .software-details-pricing-price {
+    font-size: 1.2rem;
+  }
+
+  .software-details-pricing-target {
+    font-size: 0.9rem;
+  }
+
+  .software-details-pricing-features {
+    font-size: 0.9rem;
+  }
+
+  .software-details-pricing-cta {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .software-details-faqs {
+    margin-top: 0.8rem;
+  }
+
+  .software-details-faq {
+    margin-bottom: 0.8rem;
+  }
+
+  .software-details-faq summary {
+    font-size: 0.95rem;
+    padding: 0.8rem 0;
+  }
+
+  .software-details-faq div {
+    font-size: 0.9rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .software-details-reviews {
+    gap: 1rem;
+  }
+
+  .software-details-review {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .software-details-review-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .software-details-review-header {
+    gap: 0.8rem;
+  }
+
+  .software-details-review-name {
+    font-size: 0.95rem;
+  }
+
+  .software-details-review-rating {
+    font-size: 0.9rem;
+  }
+
+  .software-details-review-type {
+    font-size: 0.85rem;
+  }
+
+  .software-details-review-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .software-details-other-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .software-details-other-list {
+    gap: 1rem;
+  }
+
+  .software-details-other-card {
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+
+  .software-details-other-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 0.5rem;
+  }
+
+  .software-details-other-name {
+    font-size: 1rem;
+  }
+
+  .software-details-other-tagline {
+    font-size: 0.9rem;
+  }
+
+  .software-details-other-viewmore {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+}
