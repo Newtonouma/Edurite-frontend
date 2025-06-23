@@ -1,0 +1,472 @@
+.software-details-section {
+  margin: 0 auto;
+  background: #fff;
+  margin-bottom: 2.5rem;
+}
+
+/* HERO/BANNER */
+.software-details-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  box-shadow: 0 2px 12px rgba(1, 87, 76, 0.07);
+}
+.software-details-hero-imgwrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+}
+.software-details-hero-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.software-details-back {
+  display: inline-block;
+  margin-bottom: 6rem;
+  color: #01574C;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.software-details-back:hover {
+  color: #01bfa5;
+  text-decoration: underline;
+}
+.software-details-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #01574C;
+  margin-bottom: 0.2rem;
+}
+.software-details-tagline {
+  font-size: 1.1rem;
+  color: #01bfa5;
+  margin-bottom: 0.5rem;
+}
+.software-details-ratingsbar {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 0.3rem 0 0.7rem 0;
+  font-size: 1.1rem;
+  color: #01574C;
+}
+.software-details-rating .star {
+  color: #FFD600;
+  font-size: 1.2em;
+  margin-right: 0.1em;
+}
+.software-details-reviews, .software-details-downloads {
+  color: #019688;
+  font-size: 0.98em;
+}
+.software-details-platforms {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.software-details-platform {
+  background: #e0f7fa;
+  color: #01574C;
+  border-radius: 999px;
+  padding: 0.18em 0.8em;
+  font-size: 0.97em;
+  font-weight: 500;
+}
+.software-details-featurechips {
+  margin: 0.5rem 0 0.7rem 0;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.software-details-chip {
+  background: #e0f7fa;
+  color: #01574C;
+  border-radius: 999px;
+  padding: 0.25em 0.9em;
+  font-size: 0.98em;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(1, 87, 76, 0.07);
+}
+.software-details-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.software-details-demo {
+  display: inline-block;
+  background: linear-gradient(90deg, #01bfa5 0%, #01574C 100%);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.7rem 1.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(1, 87, 76, 0.10);
+}
+.software-details-demo:hover {
+  background: linear-gradient(90deg, #01574C 0%, #01bfa5 100%);
+  color: #B2FFF7;
+}
+
+/* MAIN CONTENT SPLIT */
+.software-details-main-content {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1.2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: none;
+  gap: 2.2rem;
+}
+.software-details-main-left {
+  flex: 2 1 0;
+  min-width: 0;
+}
+.software-details-main-right {
+  flex: 1 1 260px;
+  min-width: 220px;
+  max-width: 320px;
+  background: #f7faf9;
+  border-radius: 1.1rem;
+  box-shadow: 0 1px 8px rgba(1, 87, 76, 0.07);
+  padding: 1.2rem 1rem 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* TABS */
+.software-details-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1.5px solid #e0e0e0;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.software-details-tab {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.75rem 1.5rem 0.7rem 1.5rem;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #1a3c3d;
+  border-radius: 1.2rem 1.2rem 0 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+}
+.software-details-tab.active {
+  background: #e6f7f5;
+  color: #00796b;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(1, 87, 76, 0.07);
+}
+.software-details-tab:not(.active):hover {
+  background: #f5f5f5;
+  color: #009688;
+}
+
+/* SCREENSHOTS */
+.software-details-screenshots {
+  margin-bottom: 1.5rem;
+}
+.software-details-screenshots-scroll {
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.software-details-screenshot {
+  width: 180px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 1.1rem;
+  box-shadow: 0 1px 6px rgba(1, 87, 76, 0.10);
+  background: #f7faf9;
+  border: 1px solid #e0f7fa;
+}
+
+/* ABOUT/OVERVIEW */
+.software-details-about-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #01574C;
+  margin-bottom: 0.3rem;
+}
+.software-details-overview {
+  font-size: 1.08rem;
+  color: #01574C;
+  max-height: 3.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: max-height 0.3s;
+}
+.software-details-overview.expanded {
+  max-height: 100vh;
+}
+.software-details-readmore {
+  background: none;
+  border: none;
+  color: #01bfa5;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 0.2em;
+  padding: 0;
+  text-decoration: underline;
+}
+
+/* SECTION BLOCKS */
+.software-details-section-block {
+  margin-bottom: 2rem;
+}
+.software-details-section-title {
+  font-size: 1.13rem;
+  font-weight: 600;
+  color: #01574C;
+  margin-bottom: 0.4rem;
+}
+
+/* FEATURES */
+.software-details-features {
+  list-style: disc inside;
+  color: #01574C;
+  font-size: 1rem;
+  margin: 0.5rem 0 0 1.2rem;
+}
+
+/* PRICING */
+.software-details-pricing-grid {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.software-details-pricing-card {
+  background: #f7faf9;
+  border-radius: 1rem;
+  box-shadow: 0 1px 8px rgba(1, 87, 76, 0.07);
+  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+  min-width: 200px;
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.software-details-pricing-plan {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #01574C;
+  margin-bottom: 0.2rem;
+}
+.software-details-pricing-price {
+  font-size: 1.2rem;
+  color: #01bfa5;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.software-details-pricing-target {
+  font-size: 0.98rem;
+  color: #01574C;
+  margin-bottom: 0.5rem;
+}
+.software-details-pricing-features {
+  list-style: disc inside;
+  color: #01574C;
+  font-size: 0.97rem;
+  margin: 0.2rem 0 0 1.2rem;
+}
+
+/* FAQ */
+.software-details-faqs {
+  margin-top: 0.5rem;
+  list-style: none;
+  padding: 0;
+  color: #01574C;
+}
+.software-details-faq summary {
+  font-weight: 500;
+  color: #019688;
+  cursor: pointer;
+  margin-bottom: 0.2em;
+}
+.software-details-faq div {
+  color: #01574C;
+  font-size: 1.01em;
+  margin-left: 0.7em;
+}
+
+/* REVIEWS */
+.software-details-reviews {
+  margin-top: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.software-details-review {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+.software-details-review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e0f7fa;
+  color: #01574C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(1, 87, 76, 0.10);
+}
+.software-details-review-content {
+  flex: 1;
+}
+.software-details-review-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+.software-details-review-rating {
+  color: #FFD600;
+  font-size: 1.1em;
+}
+.software-details-review-type {
+  color: #019688;
+  font-size: 0.98em;
+  margin-bottom: 0.2em;
+}
+.software-details-review-text {
+  color: #01574C;
+  font-size: 1.01em;
+}
+
+/* SIDEBAR: OTHER SOFTWARES */
+.software-details-other-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #01574C;
+  margin-bottom: 0.7rem;
+}
+.software-details-other-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.software-details-other-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 1px 6px rgba(1, 87, 76, 0.07);
+  padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+  transition: box-shadow 0.2s, border 0.2s;
+  border: 1.5px solid transparent;
+}
+.software-details-other-card:hover {
+  box-shadow: 0 4px 16px rgba(1, 87, 76, 0.13);
+  border: 1.5px solid #01bfa5;
+}
+.software-details-other-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 0.7rem;
+  background: #f7faf9;
+  border: 1px solid #e0f7fa;
+}
+.software-details-other-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.software-details-other-name {
+  font-size: 1.01rem;
+  font-weight: 600;
+  color: #01574C;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.software-details-other-tagline {
+  font-size: 0.95rem;
+  color: #01bfa5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.software-details-other-viewmore {
+  margin-top: 0.7rem;
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: #01bfa5;
+  font-size: 1em;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .software-details-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .software-details-hero-imgwrap {
+    width: 70px;
+    height: 70px;
+  }
+  .software-details-img {
+    width: 56px;
+    height: 56px;
+  }
+  .software-details-section {
+    padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+  }
+  .software-details-screenshot {
+    width: 120px;
+    height: 70px;
+  }
+  .software-details-tabs {
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+  }
+  .software-details-tab {
+    padding: 0.6rem 0.9rem 0.6rem 0.9rem;
+    font-size: 0.98rem;
+  }
+}
+@media (max-width: 900px) {
+  .software-details-main-content {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .software-details-main-right {
+    max-width: 100vw;
+    width: 100%;
+    margin-top: 1.2rem;
+  }
+}

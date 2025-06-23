@@ -1,33 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import './PosShowcase.css';
+import { Link } from 'react-router-dom';
+import posData from '../assets/data/pos.js';
 import { FaCashRegister, FaMobileAlt, FaLayerGroup, FaTabletAlt } from 'react-icons/fa';
-
-const posSystems = [
-  {
-    title: 'Erudite Touch POS',
-    description: 'A modern touchscreen POS system for fast, intuitive sales and inventory management. Perfect for retail and hospitality.',
-    icon: <FaCashRegister size={36} color="#01574C" />,
-    link: '#',
-  },
-  {
-    title: 'Erudite Mobile POS',
-    description: 'Portable POS for on-the-go businesses. Accept payments, manage stock, and print receipts anywhere.',
-    icon: <FaMobileAlt size={36} color="#01574C" />,
-    link: '#',
-  },
-  {
-    title: 'Erudite All-in-One',
-    description: 'Integrated POS hardware and software for seamless checkout, analytics, and customer engagement.',
-    icon: <FaLayerGroup size={36} color="#01574C" />,
-    link: '#',
-  },
-  {
-    title: 'Erudite Tablet POS',
-    description: 'Flexible tablet-based POS for pop-up shops, events, and modern retail environments. Lightweight, powerful, and easy to use.',
-    icon: <FaTabletAlt size={36} color="#01574C" />,
-    link: '#',
-  },
-];
 
 const PosShowcase = () => {
   const sectionRef = useRef(null);
@@ -61,18 +36,32 @@ const PosShowcase = () => {
   return (
     <section className="pos-showcase-section" ref={sectionRef}>
       <h2 className="pos-showcase-heading">Grow your business with Erudite</h2>
-      <p className="pos-showcase-title">Discover our range of powerful POS systems designed for every business need.</p>
+      <div className="pos-showcase-title-row" style={{flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem'}}>
+        <p className="pos-showcase-title" style={{marginBottom: 0}}>Discover our range of powerful POS systems designed for every business need.</p>
+        <Link to="/softwares" className="pos-showcase-see-more-btn">See more</Link>
+      </div>
       <div className="pos-cards-container">
-        {posSystems.map((pos, idx) => (
-          <div className="pos-card" key={idx}>
-            <div className="pos-card-icon">{pos.icon}</div>
-            <div className="pos-card-title">{pos.title}</div>
-            <div className="pos-card-desc">{pos.description}</div>
-            <a className="pos-card-link" href={pos.link}>
-              Learn More <span className="pos-card-arrow">→</span>
-            </a>
-          </div>
-        ))}
+        {posData.products.slice(-4).map((product, idx) => {
+          const sw = product.software;
+          const slug = sw.slug || sw.name.toLowerCase().replace(/\s+/g, '-');
+          // Pick a static icon based on index for variety
+          const icons = [
+            <FaCashRegister size={40} color="#01bfa5" />, 
+            <FaMobileAlt size={40} color="#01bfa5" />, 
+            <FaLayerGroup size={40} color="#01bfa5" />, 
+            <FaTabletAlt size={40} color="#01bfa5" />
+          ];
+          return (
+            <div className="pos-card" key={sw.name}>
+              <div className="pos-card-icon">{icons[idx % icons.length]}</div>
+              <div className="pos-card-title">{sw.name}</div>
+              <div className="pos-card-desc">{sw.tagline}</div>
+              <Link className="pos-card-link" to={`/softwares/${slug}`}>
+                Learn More <span className="pos-card-arrow">→</span>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

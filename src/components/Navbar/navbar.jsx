@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState} from 'react';
 import './navbar.css';
+import posData from '../../assets/data/pos.js';
+import { Link } from 'react-router-dom';
 
 const LayoutDashboardIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -54,7 +56,7 @@ const HelpCircleIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <circle cx="12" cy="12" r="10"/>
     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-    <point x="12" y="17"/>
+    <circle cx="12" cy="17" r="1"/>
   </svg>
 );
 
@@ -64,46 +66,21 @@ const ChevronDownIcon = () => (
   </svg>
 );
 
-const features = [
-  {
-    title: "Point of Sale",
-    href: "/features/pos",
-    description: "Fast, intuitive checkout system with multiple payment options",
-  },
-  {
-    title: "Inventory Management",
-    href: "/features/inventory",
-    description: "Real-time tracking and automated stock alerts",
-  },
-  {
-    title: "Customer Management",
-    href: "/features/customers",
-    description: "Build customer profiles and loyalty programs",
-  },
-  {
-    title: "Reporting & Analytics",
-    href: "/features/analytics",
-    description: "Powerful insights to grow your business",
-  },
-  {
-    title: "Employee Management",
-    href: "/features/employees",
-    description: "Track shifts, permissions, and performance",
-  },
-  {
-    title: "Multi-Location",
-    href: "/features/multi-location",
-    description: "Manage multiple stores from one dashboard",
-  },
-];
-
-
-
+const ListItem = ({ title, children, href }) => {
+  return (
+    <li className="list-item">
+      <a href={href} className="list-item-link">
+        <div className="list-item-title">{title}</div>
+        <p className="list-item-description">{children}</p>
+      </a>
+    </li>
+  );
+};
 
 const NavigationDropdown = ({ trigger, children, isOpen, onToggle }) => {
-  const dropdownRef = useRef(null);
+  const dropdownRef = React.useRef(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         onToggle(false);
@@ -138,17 +115,6 @@ const NavigationDropdown = ({ trigger, children, isOpen, onToggle }) => {
   );
 };
 
-const ListItem = ({ title, children, href }) => {
-  return (
-    <li className="list-item">
-      <a href={href} className="list-item-link">
-        <div className="list-item-title">{title}</div>
-        <p className="list-item-description">{children}</p>
-      </a>
-    </li>
-  );
-};
-
 function MainNavigation() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -160,6 +126,9 @@ function MainNavigation() {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  // Extract software list from posData
+  const softwares = posData.products.map((p) => p.software);
 
   return (
     <nav className="main-navigation">
@@ -192,28 +161,44 @@ function MainNavigation() {
               </a>
             </li>
 
-            <li className="nav-item">
-              <NavigationDropdown
-                trigger="Features"
-                isOpen={openDropdown === 'features'}
-                onToggle={(isOpen) => handleDropdownToggle('features', isOpen)}
-              >
-                <div className="dropdown-header">
-                  <h3 className="dropdown-title">Features</h3>
-                  <p className="dropdown-subtitle">Everything you need to run your business</p>
-                </div>
-                <ul className="features-grid">
-                  {features.map((feature) => (
-                    <ListItem
-                      key={feature.title}
-                      title={feature.title}
-                      href={feature.href}
-                    >
-                      {feature.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationDropdown>
+            <li className="nav-item nav-item-softwares">
+              <div className="nav-link-softwares-wrapper">
+                <Link to="/softwares" className="nav-link nav-link-softwares">
+                  <span className="nav-link-text">Softwares</span>
+                  <span className="nav-link-highlight"></span>
+                </Link>
+                <button
+                  className={`nav-trigger-arrow ${openDropdown === 'features' ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleDropdownToggle('features', openDropdown !== 'features');
+                  }}
+                  aria-expanded={openDropdown === 'features'}
+                  tabIndex={0}
+                  style={{ background: 'none', border: 'none', padding: 0, marginLeft: '0.2rem', cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}
+                >
+                  <ChevronDownIcon />
+                </button>
+                {openDropdown === 'features' && (
+                  <div className="nav-dropdown-content nav-dropdown-content-softwares">
+                    <div className="dropdown-header">
+                      <h3 className="dropdown-title">Softwares</h3>
+                      <p className="dropdown-subtitle">All Erudite business solutions</p>
+                    </div>
+                    <ul className="features-grid">
+                      {softwares.map((software) => (
+                        <li className="list-item" key={software.name}>
+                          <Link to={`/softwares/${software.slug || software.name.toLowerCase().replace(/\s+/g, '-')}`} className="list-item-link">
+                            <div className="list-item-title">{software.name}</div>
+                            <p className="list-item-description">{software.tagline}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </li>
 
             <li className="nav-item">
@@ -227,38 +212,29 @@ function MainNavigation() {
                   <p className="dropdown-subtitle">Tailored for your business type</p>
                 </div>
                 <ul className="solutions-list">
-                  <li className="solution-item">
-                    <a href="/solutions/retail" className="solution-link">
-                      <div className="solution-icon">
-                        <PackageIcon />
-                      </div>
+                  {posData.products.map((product) => (
+                    <li className="solution-item" key={product.software.slug || product.software.name}>
+                      {/* Link to dedicated details page for each solution */}
+                      <Link to={`/solutions/details/${product.software.slug || product.software.name.toLowerCase().replace(/\s+/g, '-')}`} className="solution-link">
+                        <div className="solution-icon">
+                          {/* Optionally use a different icon per product, fallback to PackageIcon */}
+                          <PackageIcon />
+                        </div>
+                        <div className="solution-content">
+                          <div className="solution-title">{product.software.name}</div>
+                          <p className="solution-description">{product.software.tagline}</p>
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                  {/* See more link at the end */}
+                  <li className="solution-item see-more-item">
+                    <Link to="/solutions" className="solution-link see-more-link">
                       <div className="solution-content">
-                        <div className="solution-title">Retail Stores</div>
-                        <p className="solution-description">Complete POS for retail businesses</p>
+                        <div className="solution-title">See more</div>
+                        <p className="solution-description">Explore all solutions</p>
                       </div>
-                    </a>
-                  </li>
-                  <li className="solution-item">
-                    <a href="/solutions/restaurants" className="solution-link">
-                      <div className="solution-icon">
-                        <CreditCardIcon />
-                      </div>
-                      <div className="solution-content">
-                        <div className="solution-title">Restaurants</div>
-                        <p className="solution-description">Specialized for food service</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="solution-item">
-                    <a href="/solutions/services" className="solution-link">
-                      <div className="solution-icon">
-                        <UsersIcon />
-                      </div>
-                      <div className="solution-content">
-                        <div className="solution-title">Service Businesses</div>
-                        <p className="solution-description">Perfect for salons, spas, and more</p>
-                      </div>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </NavigationDropdown>
