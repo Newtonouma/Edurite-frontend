@@ -36,7 +36,6 @@ const SoftwareDetailsPage = () => {
       <div className="software-details-hero" style={{
         background: (!s.videos || s.videos.length === 0 || !s.videos[0].url) && s.images && s.images[0] ? `url('${s.images[0].url}') center/cover no-repeat` : undefined,
         position: 'relative',
-        minHeight: '60vh',
         display: 'flex',
         alignItems: 'flex-start',
         gap: '2rem',
@@ -56,7 +55,7 @@ const SoftwareDetailsPage = () => {
               top: 0,
               left: 0,
               width: '100%',
-              height: '60vh',
+              height: '100%',
               objectFit: 'cover',
               zIndex: 0
             }}
@@ -69,7 +68,7 @@ const SoftwareDetailsPage = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'rgba(255,255,255,0.82)',
+          background: 'rgba(1, 87, 76, 0.5)',
           zIndex: 1
         }} />
        

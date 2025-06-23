@@ -28,7 +28,7 @@
 .software-details-back {
   display: inline-block;
   margin-bottom: 6rem;
-  color: #01574C;
+  color: #fff;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
@@ -41,7 +41,7 @@
 .software-details-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #01574C;
+  color: #fff;
   margin-bottom: 0.2rem;
 }
 .software-details-tagline {
