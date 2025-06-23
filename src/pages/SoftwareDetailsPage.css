@@ -689,9 +689,10 @@
     width: 100%;
     background: #fff;
   }
+  
   .software-details-main-content {
     flex-direction: column;
-    padding: 0;
+    padding: 2rem;
     gap: 1rem;
     max-width: 100%;
     width: 100%;
