@@ -1,6 +1,11 @@
+/* GLOBAL BOX-SIZING FIX */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 .softwares-page-section {
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
+  max-width: 100%;
   background: #f7faf9;
   display: flex;
   flex-direction: column;
@@ -138,8 +143,8 @@
   }
   .software-card {
     min-width: 0;
-    max-width: 95vw;
-    width: 95vw;
+    max-width: 100%;
+    width: 100%;
     padding: 1.2rem 0.7rem 1rem 0.7rem;
     box-sizing: border-box;
   }
@@ -155,8 +160,8 @@
   }
   .software-card {
     min-width: 0;
-    max-width: 98vw;
-    width: 98vw;
+    max-width: 100%;
+    width: 100%;
     padding: 1.1rem 0.5rem 0.8rem 0.5rem;
     box-sizing: border-box;
   }
