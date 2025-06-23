@@ -146,7 +146,7 @@
 }
 @media (max-width: 600px) {
   .softwares-page-section {
-    padding: 1.2rem 0;
+    padding: 2rem;
   }
   .softwares-grid {
     flex-direction: column;
