@@ -16,8 +16,8 @@ const CTASection = () => {
           Get started today and experience the difference.
         </p>
         <div className="cta-buttons">
-          <a href="/demo" className="cta-btn secondary">
-            <FaCalendarAlt className="cta-icon" /> Book Demo
+          <a href="/softwares" className="cta-btn secondary">
+            Explore Softwares
           </a>
           <a href="/quotation" className="cta-btn tertiary">
             Get a Quotation
