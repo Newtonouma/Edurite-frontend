@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './aurth.css';
 
 const Signup = () => {
@@ -14,9 +14,8 @@ const Signup = () => {
     terms: false
   });
   const [errors, setErrors] = useState({});
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const validate = () => {
@@ -49,7 +48,10 @@ const Signup = () => {
     setTimeout(() => {
       // Simulate backend response
       const fakeUserId = 'user-12345';
+      const fakeOtp = '123456';
+      // Store userId in sessionStorage for OTP step
       sessionStorage.setItem('pendingUserId', fakeUserId);
+      // Redirect to OTP entry page
       navigate('/verify-otp');
     }, 1200);
   };
@@ -89,97 +91,19 @@ const Signup = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password*</label>
-            <div className="password-input-wrapper" style={{ position: 'relative' }}>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                minLength="8"
-                required
-                style={{ paddingRight: '2.5rem' }}
-              />
-              <button
-                type="button"
-                tabIndex={-1}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowPassword((v) => !v)}
-                style={{
-                  position: 'absolute',
-                  right: '0.5rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  height: '2rem',
-                  width: '2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#01574C',
-                }}
-              >
-                {showPassword ? (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.06 10.06 0 0 1 12 20c-5.05 0-9.27-3.11-11-7.5a12.32 12.32 0 0 1 2.92-4.19M6.1 6.1A9.94 9.94 0 0 1 12 4c5.05 0 9.27 3.11 11 7.5a12.32 12.32 0 0 1-2.92 4.19M1 1l22 22" /><circle cx="12" cy="12" r="3" /></svg>
-                ) : (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg>
-                )}
-              </button>
-            </div>
+            <input type="password" id="password" name="password" value={form.password} onChange={handleChange} minLength="8" required />
             {errors.password && <span className="error-message">{errors.password}</span>}
             <p className="password-hint">Minimum 8 characters</p>
           </div>
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password*</label>
-            <div className="password-input-wrapper" style={{ position: 'relative' }}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                minLength="8"
-                required
-                style={{ paddingRight: '2.5rem' }}
-              />
-              <button
-                type="button"
-                tabIndex={-1}
-                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowConfirmPassword((v) => !v)}
-                style={{
-                  position: 'absolute',
-                  right: '0.5rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  height: '2rem',
-                  width: '2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#01574C',
-                }}
-              >
-                {showConfirmPassword ? (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.06 10.06 0 0 1 12 20c-5.05 0-9.27-3.11-11-7.5a12.32 12.32 0 0 1 2.92-4.19M6.1 6.1A9.94 9.94 0 0 1 12 4c5.05 0 9.27 3.11 11 7.5a12.32 12.32 0 0 1-2.92 4.19M1 1l22 22" /><circle cx="12" cy="12" r="3" /></svg>
-                ) : (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg>
-                )}
-              </button>
-            </div>
+            <input type="password" id="confirmPassword" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} minLength="8" required />
             {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
           </div>
           <div className="form-group terms">
             <label className="terms-label">
               <input type="checkbox" name="terms" checked={form.terms} onChange={handleChange} required />
-              <span>I agree to the <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link></span>
+              <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></span>
             </label>
             {errors.terms && <span className="error-message">{errors.terms}</span>}
           </div>
@@ -188,7 +112,7 @@ const Signup = () => {
           </button>
         </form>
         <div className="auth-footer">
-          <p>Already have an account? <Link to="/login">Sign in</Link></p>
+          <p>Already have an account? <a href="/login">Sign in</a></p>
         </div>
       </div>
     </div>

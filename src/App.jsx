@@ -10,6 +10,8 @@ import SoftwaresPage from "./pages/SoftwaresPage";
 import SoftwareDetailsPage from "./pages/SoftwareDetailsPage";
 import SupportPage from "./pages/SupportPage";
 import QuotationPage from './pages/QuotationPage';
+import OtpVerification from './pages/aurth/OtpVerification';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -18,11 +20,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
+        <Route path="/signup" element={<Signup showPasswordToggle={true} />} />
         <Route path="/softwares" element={<SoftwaresPage />} />
         <Route path="/softwares/:slug" element={<SoftwareDetailsPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/quotation" element={<QuotationPage />} />
+        <Route path="/verify-otp" element={<OtpVerification />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
     </div>

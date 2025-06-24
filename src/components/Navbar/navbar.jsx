@@ -123,6 +123,12 @@ function MainNavigation() {
     setOpenDropdown(isOpen ? dropdownName : null);
   };
 
+  // Close dropdown when a dropdown link is clicked
+  const handleDropdownLinkClick = () => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  };
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -194,7 +200,10 @@ function MainNavigation() {
                     <ul className="features-grid">
                       {softwares.map((software) => (
                         <li className="list-item" key={software.name}>
-                          <Link to={`/softwares/${software.slug || software.name.toLowerCase().replace(/\s+/g, '-')}`} className="list-item-link">
+                          <Link to={`/softwares/${software.slug || software.name.toLowerCase().replace(/\s+/g, '-')}`}
+                            className="list-item-link"
+                            onClick={handleDropdownLinkClick}
+                          >
                             <div className="list-item-title">{software.name}</div>
                             <p className="list-item-description">{software.tagline}</p>
                           </Link>
@@ -265,7 +274,7 @@ function MainNavigation() {
                 </div>
                 <ul className="resources-list">
                   <li className="resource-item">
-                    <a href="/resources/docs" className="resource-link">
+                    <a href="/resources/docs" className="resource-link" onClick={handleDropdownLinkClick}>
                       <div className="resource-icon">
                         <HelpCircleIcon />
                       </div>
@@ -276,7 +285,7 @@ function MainNavigation() {
                     </a>
                   </li>
                   <li className="resource-item">
-                    <a href="/resources/blog" className="resource-link">
+                    <a href="/resources/blog" className="resource-link" onClick={handleDropdownLinkClick}>
                       <div className="resource-icon">
                         <BarChartIcon />
                       </div>
@@ -295,6 +304,19 @@ function MainNavigation() {
                 <span className="nav-link-text">Support</span>
                 <span className="nav-link-highlight"></span>
               </a>
+            </li>
+            {/* Show login/signup in mobile menu */}
+            <li className="nav-item mobile-auth">
+              <Link to="/login" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+                <span className="nav-link-text">Login</span>
+                <span className="nav-link-highlight"></span>
+              </Link>
+            </li>
+            <li className="nav-item mobile-auth">
+              <Link to="/signup" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+                <span className="nav-link-text">Sign Up</span>
+                <span className="nav-link-highlight"></span>
+              </Link>
             </li>
           </ul>
         </div>
