@@ -118,6 +118,11 @@ body, html {
   color: #01574C;
 }
 
+.heros-link {
+  text-decoration: none;
+  display: inline-block;
+}
+
 @media (max-width: 600px) {
   .heros-container {
     margin-top: 0rem;

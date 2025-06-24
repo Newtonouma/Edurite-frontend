@@ -101,8 +101,8 @@ const Heros = () => {
         <h1>Transform Your Business with Fast, Modern POS Solutions Today</h1>
         <p>Our advanced POS systems empower your business with seamless transactions, real-time analytics, inventory management, and secure payments. Experience reliability, speed, and support for every retail and hospitality need today.</p>
         <div className="heros-buttons">
-          <button className="heros-btn primary">Get Started</button>
-          <button className="heros-btn secondary">Learn More</button>
+          <a href="/quotation" className="heros-btn primary heros-link">Get Started</a>
+          <a href="/softwares" className="heros-btn secondary heros-link">Explore Softwares</a>
         </div>
         <img src="/hero.png" alt="POS System" className="heros-image" />
       </div>

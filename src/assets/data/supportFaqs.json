@@ -1,0 +1,22 @@
+[
+  {
+    "question": "How do I reset my password?",
+    "answer": "Go to the login page, click 'Forgot Password', and follow the instructions sent to your email."
+  },
+  {
+    "question": "How can I get a demo of a POS product?",
+    "answer": "Visit the product details page and click the 'Request Demo' button or contact our support team."
+  },
+  {
+    "question": "What payment options are available?",
+    "answer": "We accept M-Pesa, bank transfer, and all major credit cards. See the pricing section for more details."
+  },
+  {
+    "question": "Can I use the software offline?",
+    "answer": "Yes, most of our products support offline mode and sync data when you reconnect."
+  },
+  {
+    "question": "How do I contact support?",
+    "answer": "You can email us at info@erudite.co.ke, call +254 700 123456, or use the support form on this page."
+  }
+]

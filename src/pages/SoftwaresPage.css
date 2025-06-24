@@ -136,6 +136,24 @@
   background: linear-gradient(90deg, #01574C 0%, #01bfa5 100%);
   color: #B2FFF7;
 }
+.software-quote-btn {
+  display: inline-block;
+  margin-top: 0.7rem;
+  padding: 0.7rem 1.4rem;
+  background: #01bfa5;
+  color: #fff;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  border: none;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(1, 87, 76, 0.10);
+}
+.software-quote-btn:hover {
+  background: #018f7b;
+  transform: translateY(-2px) scale(1.04);
+}
 @media (max-width: 900px) {
   .softwares-grid {
     gap: 1.2rem;

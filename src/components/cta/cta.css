@@ -123,6 +123,21 @@
   transform: translateY(-3px);
 }
 
+.cta-btn.tertiary {
+  background: #fff;
+  color: #01bfa5;
+  border: 2px solid #01bfa5;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.2s;
+}
+.cta-btn.tertiary:hover {
+  background: #01bfa5;
+  color: #fff;
+  border: 2px solid #018f7b;
+  transform: translateY(-2px) scale(1.04);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

@@ -206,6 +206,7 @@ function MainNavigation() {
               </div>
             </li>
 
+            {/*
             <li className="nav-item">
               <NavigationDropdown
                 trigger="Solutions"
@@ -220,10 +221,10 @@ function MainNavigation() {
                   {posData.products.map((product) => (
                     <li className="solution-item" key={product.software.slug || product.software.name}>
                       {/* Link to dedicated details page for each solution */}
-                      <Link to={`/solutions/details/${product.software.slug || product.software.name.toLowerCase().replace(/\s+/g, '-')}`} className="solution-link">
+                      {/* <Link to={`/solutions/details/${product.software.slug || product.software.name.toLowerCase().replace(/\s+/g, '-')}`} className="solution-link">
                         <div className="solution-icon">
                           {/* Optionally use a different icon per product, fallback to PackageIcon */}
-                          <PackageIcon />
+                          {/* <PackageIcon />
                         </div>
                         <div className="solution-content">
                           <div className="solution-title">{product.software.name}</div>
@@ -231,9 +232,9 @@ function MainNavigation() {
                         </div>
                       </Link>
                     </li>
-                  ))}
+                  ))} */}
                   {/* See more link at the end */}
-                  <li className="solution-item see-more-item">
+                  {/* <li className="solution-item see-more-item">
                     <Link to="/solutions" className="solution-link see-more-link">
                       <div className="solution-content">
                         <div className="solution-title">See more</div>
@@ -243,11 +244,11 @@ function MainNavigation() {
                   </li>
                 </ul>
               </NavigationDropdown>
-            </li>
+            </li> */}
 
             <li className="nav-item">
-              <a href="/pricing" className="nav-link">
-                <span className="nav-link-text">Pricing</span>
+              <a href="/quotation" className="nav-link">
+                <span className="nav-link-text">Quotation</span>
                 <span className="nav-link-highlight"></span>
               </a>
             </li>
@@ -285,24 +286,13 @@ function MainNavigation() {
                       </div>
                     </a>
                   </li>
-                  <li className="resource-item">
-                    <a href="/resources/support" className="resource-link">
-                      <div className="resource-icon">
-                        <SettingsIcon />
-                      </div>
-                      <div className="resource-content">
-                        <div className="resource-title">Support</div>
-                        <p className="resource-description">Get help when you need it</p>
-                      </div>
-                    </a>
-                  </li>
                 </ul>
               </NavigationDropdown>
             </li>
 
             <li className="nav-item">
-              <a href="/contact" className="nav-link">
-                <span className="nav-link-text">Contact</span>
+              <a href="/support" className="nav-link">
+                <span className="nav-link-text">Support</span>
                 <span className="nav-link-highlight"></span>
               </a>
             </li>

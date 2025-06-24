@@ -8,6 +8,8 @@ import Login from "./pages/aurth/login"
 import Signup from "./pages/aurth/signup";
 import SoftwaresPage from "./pages/SoftwaresPage";
 import SoftwareDetailsPage from "./pages/SoftwareDetailsPage";
+import SupportPage from "./pages/SupportPage";
+import QuotationPage from './pages/QuotationPage';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/signup" element={<Signup/>} />
         <Route path="/softwares" element={<SoftwaresPage />} />
         <Route path="/softwares/:slug" element={<SoftwareDetailsPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/quotation" element={<QuotationPage />} />
       </Routes>
       <Footer />
     </div>
