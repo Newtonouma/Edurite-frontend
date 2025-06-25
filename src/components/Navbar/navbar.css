@@ -218,7 +218,9 @@
 .list-item {
   margin: 0;
 }
-
+.mobile-auth{
+  display: none;
+}
 .list-item-link {
   display: block;
   padding: 1rem;
