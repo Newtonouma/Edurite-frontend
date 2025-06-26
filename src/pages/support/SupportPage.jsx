@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SupportPage.css';
-import supportFaqs from '../assets/data/supportFaqs.json';
+import supportFaqs from '../../assets/data/supportFaqs.json';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const SupportPage = () => {

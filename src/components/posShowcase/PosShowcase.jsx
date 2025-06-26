@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './PosShowcase.css';
 import { Link } from 'react-router-dom';
-import posData from '../assets/data/pos.js';
+import posData from '../../assets/data/pos.js';
 import { FaCashRegister, FaMobileAlt, FaLayerGroup, FaTabletAlt } from 'react-icons/fa';
 
 const PosShowcase = () => {

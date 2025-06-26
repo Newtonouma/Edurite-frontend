@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './dashboard/dashboard.css';
-import SubscriptionTable from './dashboard/SubscriptionTable';
-import PaymentHistoryTable from './dashboard/PaymentHistoryTable';
-import PaymentMethods from './dashboard/PaymentMethods';
-import SubscriptionActions from './dashboard/SubscriptionActions';
-import NotificationBanner from './dashboard/NotificationBanner';
+import '../dashboard/dashboard.css';
+import SubscriptionTable from './SubscriptionTable';
+import PaymentHistoryTable from './PaymentHistoryTable';
+import PaymentMethods from './PaymentMethods';
+import SubscriptionActions from './SubscriptionActions';
+import NotificationBanner from './NotificationBanner';
 
 // Navigation configuration
 const navSections = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import posData from '../assets/data/pos';
+import posData from '../../assets/data/pos';
 import './SoftwaresPage.css';
 import { Link } from 'react-router-dom';
 

@@ -6,12 +6,13 @@ import Footer from "./components/footer/footer";
 import Home from "./pages/home";
 import Login from "./pages/aurth/login"
 import Signup from "./pages/aurth/signup";
-import SoftwaresPage from "./pages/SoftwaresPage";
-import SoftwareDetailsPage from "./pages/SoftwareDetailsPage";
-import SupportPage from "./pages/SupportPage";
-import QuotationPage from './pages/QuotationPage';
+import SoftwaresPage from "./pages/softwares/SoftwaresPage";
+import SoftwareDetailsPage from "./pages/softwares/SoftwareDetailsPage";
+import SupportPage from "./pages/support/SupportPage";
+import QuotationPage from './pages/quotation/QuotationPage';
 import OtpVerification from './pages/aurth/OtpVerification';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/dashboard/Dashboard';
+import AdminLayout from './pages/admin/AdminLayout';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/quotation" element={<QuotationPage />} />
         <Route path="/verify-otp" element={<OtpVerification />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminLayout />} />
       </Routes>
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import posData from '../assets/data/pos';
+import posData from '../../assets/data/pos';
 import './SoftwareDetailsPage.css';
 
 const getInitials = (name) => {

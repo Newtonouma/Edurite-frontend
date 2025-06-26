@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './QuotationPage.css';
-import quotationFaqs from '../assets/data/quotationFaqs.json';
+import quotationFaqs from '../../assets/data/quotationFaqs.json';
 
 const initialForm = {
   name: '',

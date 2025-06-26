@@ -1,7 +1,7 @@
 import React from 'react';
 import './PricingSection.css';
 import { FaRocket, FaStar, FaCrown, FaCheck } from 'react-icons/fa';
-import posData from '../assets/data/pos.js';
+import posData from '../../assets/data/pos.js';
 
 const icons = [
   <FaRocket className="pricing-card-icon" />,
