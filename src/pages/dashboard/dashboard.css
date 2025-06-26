@@ -1,0 +1,250 @@
+/* =====================
+   Theme Variables
+====================== */
+:root {
+  --primary: #01574C;
+  --primary-light: #01bfa5;
+  --primary-bg: #f7faf9;
+  --accent: #e0f7fa;
+  --accent-light: #B2FFF7;
+  --danger: #d32f2f;
+  --danger-bg: #ffd6d6;
+  --info-bg: #e0f7fa;
+  --success-bg: #B2FFF7;
+  --white: #fff;
+  --shadow: 0 4px 24px rgba(1,87,76,0.10);
+  --radius-lg: 1.2rem;
+  --radius-md: 1rem;
+  --radius-sm: 0.7rem;
+}
+
+/* =====================
+   Layout
+====================== */
+.dashboard-main, .dashboard-container {
+
+  padding: 2rem;
+  background: var(--white);
+  display: flex;
+  gap: 2rem;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 0;
+}
+
+.dashboard-section {
+  margin-bottom: 2.5rem;
+  background: var(--primary-bg);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(1,87,76,0.04);
+}
+
+.dashboard-section h2, .dashboard-section h3 {
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.dashboard-section h2 {
+  font-size: 1.5rem;
+}
+.dashboard-section h3 {
+  font-size: 1.2rem;
+}
+
+/* =====================
+   Table Styles
+====================== */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(1,87,76,0.06);
+}
+.dashboard-table th, .dashboard-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--accent);
+  font-size: 1rem;
+}
+.dashboard-table th {
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
+}
+.dashboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* =====================
+   Buttons
+====================== */
+.dashboard-btn {
+  background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1.3rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(1,87,76,0.08);
+}
+.dashboard-btn:hover {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: var(--accent-light);
+}
+
+/* =====================
+   Notification Banner
+====================== */
+.dashboard-notification {
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(1,87,76,0.08);
+}
+.dashboard-notification-info {
+  background: var(--info-bg);
+  color: var(--primary);
+}
+.dashboard-notification-success {
+  background: var(--success-bg);
+  color: var(--primary);
+}
+.dashboard-notification-error {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+/* =====================
+   Payment Methods
+====================== */
+.dashboard-methods-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.dashboard-method-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 4px rgba(1,87,76,0.06);
+}
+
+/* =====================
+   Side Navigation
+====================== */
+.dashboard-sidenav {
+  min-width: 200px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(1,87,76,0.04);
+  height: fit-content;
+}
+.dashboard-sidenav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.dashboard-sidenav li {
+  margin-bottom: 1.2rem;
+}
+.dashboard-sidenav a, .dashboard-sidenav .nav-button {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.08rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  display: block;
+  transition: background 0.2s, color 0.2s;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+.dashboard-sidenav a.active, .dashboard-sidenav .nav-button.active,
+.dashboard-sidenav a:hover, .dashboard-sidenav .nav-button:hover {
+  background: var(--accent);
+  color: var(--primary-light);
+}
+.active-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--primary-light);
+  border-radius: 3px 0 0 3px;
+}
+
+/* =====================
+   Responsive
+====================== */
+@media (max-width: 900px) {
+  .dashboard-main, .dashboard-container {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+  .dashboard-sidenav {
+    min-width: unset;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0.2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    box-shadow: none;
+    border-radius: var(--radius-sm);
+    background: var(--primary-bg);
+  }
+  .dashboard-sidenav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .dashboard-sidenav li {
+    margin-bottom: 0;
+    flex: 1 1 0;
+  }
+  .dashboard-sidenav a, .dashboard-sidenav .nav-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    min-width: 90px;
+  }
+  .active-indicator {
+    display: none;
+  }
+  .dashboard-table th, .dashboard-table td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.95rem;
+  }
+  .dashboard-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.95rem;
+  }
+}
