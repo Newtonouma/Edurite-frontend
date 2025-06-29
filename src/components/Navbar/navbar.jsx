@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import './navbar.css';
 import posData from '../../assets/data/pos.js';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LayoutDashboardIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -118,6 +119,7 @@ const NavigationDropdown = ({ trigger, children, isOpen, onToggle }) => {
 function MainNavigation() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
 
   const handleDropdownToggle = (dropdownName, isOpen) => {
     setOpenDropdown(isOpen ? dropdownName : null);
@@ -305,30 +307,112 @@ function MainNavigation() {
                 <span className="nav-link-highlight"></span>
               </a>
             </li>
-            {/* Show login/signup in mobile menu */}
-            <li className="nav-item mobile-auth">
-              <Link to="/login" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
-                <span className="nav-link-text">Login</span>
-                <span className="nav-link-highlight"></span>
-              </Link>
-            </li>
-            <li className="nav-item mobile-auth">
-              <Link to="/signup" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
-                <span className="nav-link-text">Sign Up</span>
-                <span className="nav-link-highlight"></span>
-              </Link>
-            </li>
+            {/* Show login/signup or user menu based on auth state */}
+            {!isAuthenticated ? (
+              <>
+                <li className="nav-item mobile-auth">
+                  <Link to="/login" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="nav-link-text">Login</span>
+                    <span className="nav-link-highlight"></span>
+                  </Link>
+                </li>
+                <li className="nav-item mobile-auth">
+                  <Link to="/signup" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="nav-link-text">Sign Up</span>
+                    <span className="nav-link-highlight"></span>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item mobile-auth">
+                  <Link to="/dashboard" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="nav-link-text">Dashboard</span>
+                    <span className="nav-link-highlight"></span>
+                  </Link>
+                </li>
+                <li className="nav-item mobile-auth">
+                  <button 
+                    className="nav-link logout-btn" 
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <span className="nav-link-text">Logout</span>
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
-        {/* Login Button - Right */}
+        {/* Auth Section - Right */}
         <div className="nav-auth">
-          <a href="/login" className="login-button">
-            Login
-          </a>
-          <a href="/signup" className="signup-button">
-            Sign Up
-          </a>
+          {!isAuthenticated ? (
+            <>
+              <Link to="/login" className="login-button">
+                Login
+              </Link>
+              <Link to="/signup" className="signup-button">
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <div className="user-menu">
+              <NavigationDropdown
+                trigger={
+                  <div className="user-trigger">
+                    <span className="user-name">
+                      {user?.firstName || 'User'}
+                    </span>
+                    <div className="user-avatar">
+                      {(user?.firstName?.[0] || 'U').toUpperCase()}
+                    </div>
+                  </div>
+                }
+                isOpen={openDropdown === 'user'}
+                onToggle={(isOpen) => handleDropdownToggle('user', isOpen)}
+              >
+                <div className="user-dropdown">
+                  <div className="user-info">
+                    <div className="user-name-full">
+                      {user?.firstName} {user?.lastName}
+                    </div>
+                    <div className="user-email">{user?.email}</div>
+                  </div>
+                  <div className="user-actions">
+                    <Link 
+                      to="/dashboard" 
+                      className="user-action-link"
+                      onClick={handleDropdownLinkClick}
+                    >
+                      <LayoutDashboardIcon />
+                      Dashboard
+                    </Link>
+                    <Link 
+                      to="/quotation" 
+                      className="user-action-link"
+                      onClick={handleDropdownLinkClick}
+                    >
+                      <CreditCardIcon />
+                      Get Quote
+                    </Link>
+                    <button 
+                      className="user-action-link logout-btn"
+                      onClick={() => {
+                        logout();
+                        handleDropdownLinkClick();
+                      }}
+                    >
+                      <SettingsIcon />
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </NavigationDropdown>
+            </div>
+          )}
         </div>
       </div>
     </nav>

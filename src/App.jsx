@@ -1,6 +1,7 @@
-import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar/navbar";
 import Footer from "./components/footer/footer";
 import Home from "./pages/home";
@@ -16,22 +17,52 @@ import AdminLayout from './pages/admin/AdminLayout';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup showPasswordToggle={true} />} />
-        <Route path="/softwares" element={<SoftwaresPage />} />
-        <Route path="/softwares/:slug" element={<SoftwareDetailsPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/quotation" element={<QuotationPage />} />
-        <Route path="/verify-otp" element={<OtpVerification />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/admin" element={<AdminLayout />} />
-      </Routes>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route 
+            path="/login" 
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <Login/>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/signup" 
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <Signup showPasswordToggle={true} />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/softwares" element={<SoftwaresPage />} />
+          <Route path="/softwares/:slug" element={<SoftwareDetailsPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/quotation" element={<QuotationPage />} />
+          <Route path="/verify-otp" element={<OtpVerification />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 

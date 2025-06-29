@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import './aurth.css';
 
 const OTP_RESEND_LIMIT = 4;
@@ -14,7 +15,18 @@ const OtpVerification = () => {
   const [resendWindowEnd, setResendWindowEnd] = useState(null);
   const [resendMessage, setResendMessage] = useState('');
   const [cooldown, setCooldown] = useState(0);
+  
+  const { verifyOtp, resendOtp } = useAuth();
   const navigate = useNavigate();
+
+  // Check if user has pending verification
+  useEffect(() => {
+    const pendingUserId = sessionStorage.getItem('pendingUserId');
+    if (!pendingUserId) {
+      // No pending verification, redirect to signup
+      navigate('/signup');
+    }
+  }, [navigate]);
 
   // Load resend state from localStorage
   useEffect(() => {
@@ -55,97 +67,173 @@ const OtpVerification = () => {
     }
   }, [resendDisabled, resendWindowEnd]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    
     if (!otp.trim()) {
-      setError('Please enter the OTP code sent to you.');
+      setError('Please enter the OTP code');
       return;
     }
+
+    if (otp.length !== 6) {
+      setError('OTP must be 6 digits');
+      return;
+    }
+
     setSubmitting(true);
-    // Simulate backend verification
-    setTimeout(() => {
-      // Simulate success
-      sessionStorage.removeItem('pendingUserId');
-      localStorage.removeItem('otpResendData');
-      navigate('/dashboard');
-    }, 1200);
+    setError('');
+
+    try {
+      const pendingUserId = sessionStorage.getItem('pendingUserId');
+      const result = await verifyOtp({
+        userId: pendingUserId,
+        otp: otp.trim()
+      });
+
+      if (result.success) {
+        // Clear pending user data
+        sessionStorage.removeItem('pendingUserId');
+        localStorage.removeItem('otpResendData');
+        
+        // Redirect to dashboard
+        navigate('/dashboard');
+      } else {
+        setError(result.error || 'Invalid OTP code. Please try again.');
+      }
+    } catch {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleResend = () => {
+  const handleResend = async () => {
     if (resendDisabled) return;
-    let data = JSON.parse(localStorage.getItem('otpResendData') || '{}');
-    const now = Date.now();
-    if (!data.startTime || now - data.startTime > OTP_RESEND_WINDOW_MS) {
-      // New window
-      data = { startTime: now, count: 1 };
-    } else {
-      data.count = (data.count || 0) + 1;
+
+    try {
+      const pendingUserId = sessionStorage.getItem('pendingUserId');
+      const result = await resendOtp(pendingUserId);
+
+      if (result.success) {
+        const newCount = resendCount + 1;
+        setResendCount(newCount);
+        setResendMessage('OTP code has been resent to your email.');
+
+        // Update localStorage
+        const now = Date.now();
+        const resendData = {
+          count: newCount,
+          startTime: resendWindowEnd || now
+        };
+        localStorage.setItem('otpResendData', JSON.stringify(resendData));
+
+        if (newCount >= OTP_RESEND_LIMIT) {
+          setResendDisabled(true);
+          setResendWindowEnd(resendData.startTime + OTP_RESEND_WINDOW_MS);
+          setCooldown(Math.ceil(OTP_RESEND_WINDOW_MS / 1000));
+          setResendMessage(`Maximum resend limit reached. Please wait ${Math.ceil(OTP_RESEND_WINDOW_MS / 60000)} minutes before trying again.`);
+        }
+
+        // Clear success message after 3 seconds
+        if (newCount < OTP_RESEND_LIMIT) {
+          setTimeout(() => setResendMessage(''), 3000);
+        }
+      } else {
+        setError(result.error || 'Failed to resend OTP. Please try again.');
+      }
+    } catch {
+      setError('Failed to resend OTP. Please try again.');
     }
-    localStorage.setItem('otpResendData', JSON.stringify(data));
-    setResendCount(data.count);
-    setResendWindowEnd(data.startTime + OTP_RESEND_WINDOW_MS);
-    setResendMessage('A new OTP has been sent.');
-    if (data.count >= OTP_RESEND_LIMIT) {
-      setResendDisabled(true);
-      setCooldown(Math.ceil((data.startTime + OTP_RESEND_WINDOW_MS - now) / 1000));
-    }
-    // Simulate sending OTP (show message for 2s)
-    setTimeout(() => setResendMessage(''), 2000);
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   return (
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-header">
-          <h2>Verify Your Account</h2>
-          <p>Enter the OTP code sent to your email or phone to complete registration.</p>
+          <h2>Verify Your Email</h2>
+          <p>We've sent a 6-digit verification code to your email address</p>
         </div>
+
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="otp">OTP Code</label>
+            <label htmlFor="otp">Verification Code</label>
             <input
               type="text"
               id="otp"
-              name="otp"
               value={otp}
-              onChange={e => setOtp(e.target.value)}
+              onChange={(e) => {
+                setOtp(e.target.value.replace(/\D/g, '').slice(0, 6));
+                if (error) setError('');
+              }}
+              placeholder="000000"
+              maxLength="6"
+              className={`otp-input ${error ? 'error' : ''}`}
+              style={{
+                textAlign: 'center',
+                fontSize: '24px',
+                letterSpacing: '8px',
+                fontFamily: 'monospace'
+              }}
               required
-              maxLength={8}
-              autoFocus
             />
             {error && <span className="error-message">{error}</span>}
           </div>
-          <div className="otp-resend-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-            <button
-              type="button"
-              className="otp-resend-link"
-              onClick={handleResend}
-              disabled={resendDisabled}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: resendDisabled ? '#aaa' : '#01bfa5',
-                textDecoration: 'none', 
-                cursor: resendDisabled ? 'not-allowed' : 'pointer',
-                fontWeight: 600,
-                fontSize: '1rem',
-                padding: 0,
-              }}
-            >
-              Resend OTP
-            </button>
-            <span style={{ fontSize: '0.95rem', color: resendDisabled ? '#d32f2f' : '#01574C', marginLeft: '1rem' }}>
-              {resendDisabled
-                ? `Resend limit reached. Try again in ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)} min`
-                : `${OTP_RESEND_LIMIT - resendCount} resend${OTP_RESEND_LIMIT - resendCount === 1 ? '' : 's'} left`}
-            </span>
-          </div>
-          {resendMessage && <div className="otp-resend-message" style={{ color: '#388e3c', marginBottom: '0.5rem', fontWeight: 500 }}>{resendMessage}</div>}
-          <button type="submit" className="auth-btn primary" disabled={submitting}>
-            {submitting ? 'Verifying...' : 'Verify'}
+
+          <button 
+            type="submit" 
+            className="auth-btn primary"
+            disabled={submitting}
+          >
+            {submitting ? 'Verifying...' : 'Verify Email'}
           </button>
         </form>
+
+        <div className="resend-section">
+          {resendMessage && (
+            <div className={`resend-message ${resendDisabled ? 'error' : 'success'}`}>
+              {resendMessage}
+            </div>
+          )}
+          
+          {resendDisabled ? (
+            <p className="resend-info">
+              Try again in {formatTime(cooldown)}
+            </p>
+          ) : (
+            <div className="resend-info">
+              <p>Didn't receive the code?</p>
+              <button 
+                type="button" 
+                className="resend-btn"
+                onClick={handleResend}
+              >
+                Resend Code {resendCount > 0 && `(${resendCount}/${OTP_RESEND_LIMIT})`}
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="auth-footer">
+          <p>
+            Wrong email? 
+            <button 
+              type="button"
+              className="link-btn"
+              onClick={() => {
+                sessionStorage.removeItem('pendingUserId');
+                navigate('/signup');
+              }}
+            >
+              Go back to signup
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

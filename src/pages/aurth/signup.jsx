@@ -1,42 +1,40 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './aurth.css';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [form, setForm] = useState({
-    firstName: '',
-    secondName: '',
-    lastName: '',
+    first_name: '',
+    second_name: '',
+    last_name: '',
     email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-    terms: false
+    phone_number: '',
+    password: ''
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const validate = () => {
     const errs = {};
-    if (!form.firstName.trim()) errs.firstName = 'First name is required';
-    if (!form.lastName.trim()) errs.lastName = 'Last name is required';
-    if (!form.email.trim()) errs.email = 'Email is required';
-    if (!form.password) errs.password = 'Password is required';
-    if (!form.confirmPassword) errs.confirmPassword = 'Confirm your password';
-    if (form.password && form.confirmPassword && form.password !== form.confirmPassword) errs.confirmPassword = "Passwords don't match";
-    if (!form.terms) errs.terms = 'You must agree to the terms';
+    if (!form.first_name.trim()) errs.first_name = 'First name is required';
+    if (!form.last_name.trim()) errs.last_name = 'Last name is required';
+    if (!form.email.trim()) {
+      errs.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      errs.email = 'Email is invalid';
+    }
+    if (!form.password) {
+      errs.password = 'Password is required';
+    } else if (form.password.length < 8) {
+      errs.password = 'Password must be at least 8 characters';
+    }
     return errs;
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const handleSubmit = async (e) => {
@@ -45,151 +43,78 @@ const Signup = () => {
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
     setSubmitting(true);
-    // Simulate backend call
-    setTimeout(() => {
-      // Simulate backend response
-      const fakeUserId = 'user-12345';
-      sessionStorage.setItem('pendingUserId', fakeUserId);
-      navigate('/verify-otp');
-    }, 1200);
+    try {
+      // Only include phone_number if not empty
+      const payload = {
+        first_name: form.first_name.trim(),
+        second_name: form.second_name.trim(),
+        last_name: form.last_name.trim(),
+        email: form.email.trim(),
+        password: form.password
+      };
+      if (form.phone_number.trim()) payload.phone_number = form.phone_number.trim();
+      console.log('[Signup] Sending payload:', payload);
+      const res = await fetch('https://50ce-102-210-40-226.ngrok-free.app/auth/v1/signup/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      console.log('[Signup] API response:', data);
+      if (res.ok && (data.status_code === 201 || data.message?.toLowerCase().includes('success'))) {
+        // Redirect to OTP page after successful signup
+        navigate('/verify-otp');
+      } else {
+        setErrors({ general: data.message || 'Signup failed.' });
+        console.error('[Signup] API error payload:', payload);
+        console.error('[Signup] API error response:', data);
+      }
+    } catch (err) {
+      setErrors({ general: 'Network or server error.' });
+      console.error('[Signup] Network/server error:', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <div className="auth-header">
-          <h2>Create Account</h2>
-          <p>Get started with your free account</p>
-        </div>
+        <h2>Create Account</h2>
         <form className="auth-form" onSubmit={handleSubmit}>
-          <div className="name-fields">
-            <div className="form-group">
-              <label htmlFor="firstName">First Name*</label>
-              <input type="text" id="firstName" name="firstName" value={form.firstName} onChange={handleChange} required />
-              {errors.firstName && <span className="error-message">{errors.firstName}</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="secondName">Second Name</label>
-              <input type="text" id="secondName" name="secondName" value={form.secondName} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name*</label>
-              <input type="text" id="lastName" name="lastName" value={form.lastName} onChange={handleChange} required />
-              {errors.lastName && <span className="error-message">{errors.lastName}</span>}
-            </div>
+          {errors.general && <div className="error-message">{errors.general}</div>}
+          <div className="form-group">
+            <label>First Name*</label>
+            <input type="text" name="first_name" value={form.first_name} onChange={handleChange} required className={errors.first_name ? 'error' : ''} />
+            {errors.first_name && <span className="error-message">{errors.first_name}</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email Address*</label>
-            <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required />
+            <label>Second Name</label>
+            <input type="text" name="second_name" value={form.second_name} onChange={handleChange} />
+          </div>
+          <div className="form-group">
+            <label>Last Name*</label>
+            <input type="text" name="last_name" value={form.last_name} onChange={handleChange} required className={errors.last_name ? 'error' : ''} />
+            {errors.last_name && <span className="error-message">{errors.last_name}</span>}
+          </div>
+          <div className="form-group">
+            <label>Email*</label>
+            <input type="email" name="email" value={form.email} onChange={handleChange} required className={errors.email ? 'error' : ''} />
             {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} />
+            <label>Phone Number</label>
+            <input type="tel" name="phone_number" value={form.phone_number} onChange={handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password*</label>
-            <div className="password-input-wrapper" style={{ position: 'relative' }}>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                minLength="8"
-                required
-                style={{ paddingRight: '2.5rem' }}
-              />
-              <button
-                type="button"
-                tabIndex={-1}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowPassword((v) => !v)}
-                style={{
-                  position: 'absolute',
-                  right: '0.5rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  height: '2rem',
-                  width: '2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#01574C',
-                }}
-              >
-                {showPassword ? (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.06 10.06 0 0 1 12 20c-5.05 0-9.27-3.11-11-7.5a12.32 12.32 0 0 1 2.92-4.19M6.1 6.1A9.94 9.94 0 0 1 12 4c5.05 0 9.27 3.11 11 7.5a12.32 12.32 0 0 1-2.92 4.19M1 1l22 22" /><circle cx="12" cy="12" r="3" /></svg>
-                ) : (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg>
-                )}
-              </button>
-            </div>
+            <label>Password*</label>
+            <input type="password" name="password" value={form.password} onChange={handleChange} required minLength={8} className={errors.password ? 'error' : ''} />
             {errors.password && <span className="error-message">{errors.password}</span>}
-            <p className="password-hint">Minimum 8 characters</p>
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password*</label>
-            <div className="password-input-wrapper" style={{ position: 'relative' }}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                minLength="8"
-                required
-                style={{ paddingRight: '2.5rem' }}
-              />
-              <button
-                type="button"
-                tabIndex={-1}
-                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowConfirmPassword((v) => !v)}
-                style={{
-                  position: 'absolute',
-                  right: '0.5rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  height: '2rem',
-                  width: '2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#01574C',
-                }}
-              >
-                {showConfirmPassword ? (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.06 10.06 0 0 1 12 20c-5.05 0-9.27-3.11-11-7.5a12.32 12.32 0 0 1 2.92-4.19M6.1 6.1A9.94 9.94 0 0 1 12 4c5.05 0 9.27 3.11 11 7.5a12.32 12.32 0 0 1-2.92 4.19M1 1l22 22" /><circle cx="12" cy="12" r="3" /></svg>
-                ) : (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg>
-                )}
-              </button>
-            </div>
-            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
-          </div>
-          <div className="form-group terms">
-            <label className="terms-label">
-              <input type="checkbox" name="terms" checked={form.terms} onChange={handleChange} required />
-              <span>I agree to the <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link></span>
-            </label>
-            {errors.terms && <span className="error-message">{errors.terms}</span>}
           </div>
           <button type="submit" className="auth-btn primary" disabled={submitting}>
             {submitting ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
-        <div className="auth-footer">
-          <p>Already have an account? <Link to="/login">Sign in</Link></p>
-        </div>
       </div>
     </div>
   );
