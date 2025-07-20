@@ -5,7 +5,7 @@ import posData from '../../assets/data/pos.js';
 import { FaCashRegister, FaMobileAlt, FaLayerGroup, FaTabletAlt } from 'react-icons/fa';
 
 const PosShowcase = () => {
-  const sectionRef = useRef(null); // Animation removed
+  const sectionRef = useRef(null); 
 
   return (
     <section className="pos-showcase-section" ref={sectionRef}>

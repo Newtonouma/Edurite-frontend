@@ -8,7 +8,7 @@ import TestimonialSection from '../components/testimonials/TestimonialSection';
 import FAQsSection from '../components/faqs/faqs';
 import CtaMessageSection from '../components/cta/CtaMessageSection';
 
-function App() {
+function Home() {
   return (
     <>
       <Heros />
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

@@ -65,12 +65,8 @@ const Signup = () => {
       if (res.ok && (data.status_code === 201 || data.message?.toLowerCase().includes('success'))) {
         // Extract user ID from API response (try common keys)
         const userId = data.user_id || data.id || (data.data && (data.data.user_id || data.data.id));
-        if (userId) {
-          navigate(`/verify-otp`);
-        } else {
-          setErrors({ general: 'Signup succeeded but user ID missing in response.' });
-          console.error('[Signup] Missing user ID in API response:', data);
-        }
+        // Always navigate to /verify-otp, pass userId as state if available
+        navigate('/verify-otp', userId ? { state: { userId } } : undefined);
       } else {
         setErrors({ general: data.message || 'Signup failed. Please try again.' });
         // Log all error details from the API

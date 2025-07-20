@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './FeatureSection.css';
 
 const features = [
@@ -26,15 +26,37 @@ const features = [
 
 const FeatureSection = () => {
   const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const currentSection = sectionRef.current;
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in-view');
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+    if (currentSection) {
+      observer.observe(currentSection);
+    }
+    return () => {
+      if (currentSection) {
+        observer.unobserve(currentSection);
+      }
+    };
+  }, []);
+
   return (
     <section className="feature-section" ref={sectionRef}>
       <div className="feature-content-wrapper">
         <div className="feature-image-col">
-          <img
-            src="/feature.jpg"
-            alt="POS Feature"
-            className="feature-image"
-          />
+          <img src="/feature.jpg" alt="POS Feature" className="feature-image" />
         </div>
         <div className="feature-info-col">
           <h2 className="feature-title">Why Choose Erudite POS?</h2>
