@@ -42,6 +42,7 @@ function App() {
           <Route path="/softwares/:slug" element={<SoftwareDetailsPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/quotation" element={<QuotationPage />} />
+          <Route path="/verify-otp/:userId" element={<OtpVerification />} />
           <Route path="/verify-otp" element={<OtpVerification />} />
           <Route 
             path="/dashboard" 

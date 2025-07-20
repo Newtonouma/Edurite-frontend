@@ -1,37 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import './PosShowcase.css';
 import { Link } from 'react-router-dom';
 import posData from '../../assets/data/pos.js';
 import { FaCashRegister, FaMobileAlt, FaLayerGroup, FaTabletAlt } from 'react-icons/fa';
 
 const PosShowcase = () => {
-  const sectionRef = useRef(null);
-  useEffect(() => {
-    const currentSection = sectionRef.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in-view');
-          }
-        });
-      },
-      {
-        threshold: 0.2, // Trigger when 20% of the section is visible
-        rootMargin: '0px 0px -50px 0px' // Start animation slightly before fully visible
-      }
-    );
-
-    if (currentSection) {
-      observer.observe(currentSection);
-    }
-
-    return () => {
-      if (currentSection) {
-        observer.unobserve(currentSection);
-      }
-    };
-  }, []);
+  const sectionRef = useRef(null); // Animation removed
 
   return (
     <section className="pos-showcase-section" ref={sectionRef}>

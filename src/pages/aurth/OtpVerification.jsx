@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import './aurth.css';
 
@@ -7,6 +7,7 @@ const OTP_RESEND_LIMIT = 4;
 const OTP_RESEND_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 const OtpVerification = () => {
+  const { userId } = useParams();
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -21,12 +22,10 @@ const OtpVerification = () => {
 
   // Check if user has pending verification
   useEffect(() => {
-    const pendingUserId = sessionStorage.getItem('pendingUserId');
-    if (!pendingUserId) {
-      // No pending verification, redirect to signup
+    if (!userId) {
       navigate('/signup');
     }
-  }, [navigate]);
+  }, [navigate, userId]);
 
   // Load resend state from localStorage
   useEffect(() => {
@@ -84,15 +83,13 @@ const OtpVerification = () => {
     setError('');
 
     try {
-      const pendingUserId = sessionStorage.getItem('pendingUserId');
       const result = await verifyOtp({
-        userId: pendingUserId,
+        userId: userId,
         otp: otp.trim()
       });
 
       if (result.success) {
         // Clear pending user data
-        sessionStorage.removeItem('pendingUserId');
         localStorage.removeItem('otpResendData');
         
         // Redirect to dashboard
@@ -111,8 +108,7 @@ const OtpVerification = () => {
     if (resendDisabled) return;
 
     try {
-      const pendingUserId = sessionStorage.getItem('pendingUserId');
-      const result = await resendOtp(pendingUserId);
+      const result = await resendOtp(userId);
 
       if (result.success) {
         const newCount = resendCount + 1;
@@ -143,6 +139,34 @@ const OtpVerification = () => {
       }
     } catch {
       setError('Failed to resend OTP. Please try again.');
+    }
+  };
+
+  // Add this function to call /otp/get_regenerate/:id and log the payload
+  const handleRegenerateOtp = async () => {
+    if (!userId) {
+      setError('No user ID found for OTP regeneration.');
+      return;
+    }
+    const url = `https://50ce-102-210-40-226.ngrok-free.app/otp/get_regenerate/${userId}`;
+    const payload = { userId: userId };
+    try {
+      console.log('[OTP Regenerate] Sending payload:', payload);
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      console.log('[OTP Regenerate] API response:', data);
+      if (res.ok) {
+        setResendMessage('OTP has been regenerated and sent.');
+      } else {
+        setError(data.message || 'Failed to regenerate OTP.');
+      }
+    } catch (err) {
+      setError('Network or server error.');
+      console.error('[OTP Regenerate] Network/server error:', err);
     }
   };
 
@@ -200,7 +224,9 @@ const OtpVerification = () => {
               {resendMessage}
             </div>
           )}
-          
+          <button type="button" className="resend-btn" onClick={handleRegenerateOtp} style={{marginTop: 10}}>
+            Regenerate OTP (log payload)
+          </button>
           {resendDisabled ? (
             <p className="resend-info">
               Try again in {formatTime(cooldown)}
@@ -226,7 +252,6 @@ const OtpVerification = () => {
               type="button"
               className="link-btn"
               onClick={() => {
-                sessionStorage.removeItem('pendingUserId');
                 navigate('/signup');
               }}
             >

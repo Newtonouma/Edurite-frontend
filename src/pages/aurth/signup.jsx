@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './aurth.css';
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -54,7 +55,7 @@ const Signup = () => {
       };
       if (form.phone_number.trim()) payload.phone_number = form.phone_number.trim();
       console.log('[Signup] Sending payload:', payload);
-      const res = await fetch('https://50ce-102-210-40-226.ngrok-free.app/auth/v1/signup/', {
+      const res = await fetch('https://8ff27c7ae747.ngrok-free.app/auth/v1/signup/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -62,16 +63,31 @@ const Signup = () => {
       const data = await res.json();
       console.log('[Signup] API response:', data);
       if (res.ok && (data.status_code === 201 || data.message?.toLowerCase().includes('success'))) {
-        // Redirect to OTP page after successful signup
-        navigate('/verify-otp');
+        // Extract user ID from API response (try common keys)
+        const userId = data.user_id || data.id || (data.data && (data.data.user_id || data.data.id));
+        if (userId) {
+          navigate(`/verify-otp`);
+        } else {
+          setErrors({ general: 'Signup succeeded but user ID missing in response.' });
+          console.error('[Signup] Missing user ID in API response:', data);
+        }
       } else {
-        setErrors({ general: data.message || 'Signup failed.' });
-        console.error('[Signup] API error payload:', payload);
-        console.error('[Signup] API error response:', data);
+        setErrors({ general: data.message || 'Signup failed. Please try again.' });
+        // Log all error details from the API
+        if (data.errors) {
+          console.error('[Signup] API error details:', data.errors);
+        }
+        if (data.error) {
+          console.error('[Signup] API error:', data.error);
+        }
+        if (data.message) {
+          console.error('[Signup] API message:', data.message);
+        }
+        console.error('[Signup] Full API response:', data);
       }
-    } catch (err) {
-      setErrors({ general: 'Network or server error.' });
-      console.error('[Signup] Network/server error:', err);
+    } catch (error) {
+      setErrors({ general: 'Signup failed. Please try again later.' });
+      console.error('[Signup] Exception:', error);
     } finally {
       setSubmitting(false);
     }
@@ -80,41 +96,96 @@ const Signup = () => {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <h2>Create Account</h2>
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {errors.general && <div className="error-message">{errors.general}</div>}
-          <div className="form-group">
-            <label>First Name*</label>
-            <input type="text" name="first_name" value={form.first_name} onChange={handleChange} required className={errors.first_name ? 'error' : ''} />
-            {errors.first_name && <span className="error-message">{errors.first_name}</span>}
+        <div className="auth-header">
+          <h2>Sign Up</h2>
+          <p>Create your account to get started</p>
+        </div>
+        <form className="auth-form" onSubmit={handleSubmit} autoComplete="off">
+          {errors.general && <div className="general-error">{errors.general}</div>}
+          <div className="name-fields">
+            <div className="form-group">
+              <label htmlFor="first_name">First Name</label>
+              <input
+                type="text"
+                name="first_name"
+                id="first_name"
+                value={form.first_name}
+                onChange={handleChange}
+                disabled={submitting}
+                className={errors.first_name ? 'error' : ''}
+              />
+              {errors.first_name && <div className="error-message">{errors.first_name}</div>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="second_name">Second Name</label>
+              <input
+                type="text"
+                name="second_name"
+                id="second_name"
+                value={form.second_name}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </div>
           </div>
           <div className="form-group">
-            <label>Second Name</label>
-            <input type="text" name="second_name" value={form.second_name} onChange={handleChange} />
+            <label htmlFor="last_name">Last Name</label>
+            <input
+              type="text"
+              name="last_name"
+              id="last_name"
+              value={form.last_name}
+              onChange={handleChange}
+              disabled={submitting}
+              className={errors.last_name ? 'error' : ''}
+            />
+            {errors.last_name && <div className="error-message">{errors.last_name}</div>}
           </div>
           <div className="form-group">
-            <label>Last Name*</label>
-            <input type="text" name="last_name" value={form.last_name} onChange={handleChange} required className={errors.last_name ? 'error' : ''} />
-            {errors.last_name && <span className="error-message">{errors.last_name}</span>}
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={form.email}
+              onChange={handleChange}
+              disabled={submitting}
+              className={errors.email ? 'error' : ''}
+            />
+            {errors.email && <div className="error-message">{errors.email}</div>}
           </div>
           <div className="form-group">
-            <label>Email*</label>
-            <input type="email" name="email" value={form.email} onChange={handleChange} required className={errors.email ? 'error' : ''} />
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            <label htmlFor="phone_number">Phone Number</label>
+            <input
+              type="text"
+              name="phone_number"
+              id="phone_number"
+              value={form.phone_number}
+              onChange={handleChange}
+              disabled={submitting}
+            />
           </div>
           <div className="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phone_number" value={form.phone_number} onChange={handleChange} />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={form.password}
+              onChange={handleChange}
+              disabled={submitting}
+              className={errors.password ? 'error' : ''}
+            />
+            <div className="password-hint">At least 8 characters</div>
+            {errors.password && <div className="error-message">{errors.password}</div>}
           </div>
-          <div className="form-group">
-            <label>Password*</label>
-            <input type="password" name="password" value={form.password} onChange={handleChange} required minLength={8} className={errors.password ? 'error' : ''} />
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
-          <button type="submit" className="auth-btn primary" disabled={submitting}>
-            {submitting ? 'Creating Account...' : 'Create Account'}
+          <button className="auth-btn primary" type="submit" disabled={submitting}>
+            {submitting ? 'Signing up...' : 'Sign Up'}
           </button>
         </form>
+        <div className="auth-footer">
+          Already have an account? <a href="/login">Log in</a>
+        </div>
       </div>
     </div>
   );
